@@ -9,13 +9,16 @@ module.exports = {
 
   devServer: {
     static: './dist',
+    watchFiles: ["src/index.html"],
+    hot: true,
 },
 
 plugins: [
     new HtmlWebpackPlugin({
         title: 'Output Management',
         template: './src/index.html',
-        inject: 'body'
+        inject: 'body',
+        cache: false
     }),
 ],
 

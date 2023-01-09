@@ -14,4 +14,6 @@ const test = () => {
         console.table(array)
         console.log(well.getName())
     }
-    test()
+    
+    const npb = document.getElementById('onclick', test)
+    console.log('ww')
