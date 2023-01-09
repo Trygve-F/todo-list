@@ -9,8 +9,6 @@ module.exports = {
 
   devServer: {
     static: './dist',
-    watchFiles: ["src/index.html"],
-    hot: true,
 },
 
 plugins: [
