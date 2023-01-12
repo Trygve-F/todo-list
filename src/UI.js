@@ -5,45 +5,96 @@ export default class UI {
 
 //LOAD HOMEPAGE
 static loadHomepage = () => {
-    UI.initNewProjectButtons()
+    UI.initNewProjectButtons();
+    UI.initNewTaskButtons();
     }
 
 // INIT TASK BUTTONS
+static initNewTaskButtons = () => {
+    const newTaskButton = document.getElementById('new-task-button');
+    newTaskButton.addEventListener('click', UI.checkNewTaskPopUp)
+}
+
+static checkNewTaskPopUp = () => {
     
-// GET PROJECT ELEMENTS
+    const newTaskNav = document.getElementById('new-task-nav');
+
+    if (newTaskNav.childElementCount === 1) {
+        UI.newTaskPopUp();
+        }
+    return;
+}
+
+static newTaskPopUp = () => {
+    const newTaskNav = document.getElementById('new-task-nav');
+    
+    const newTaskPopUp = document.createElement('input');
+    newTaskPopUp.id = 'new-task-popup';
+
+    const newTaskAddButton = document.createElement('button');
+    newTaskAddButton.innerHTML = ' + ';
+    newTaskAddButton.addEventListener('click', () => {
+        UI.createTask();
+        UI.closeNewTaskPopUp();
+
+})
+
+
+    const newTaskCancel = document.createElement('button');
+    newTaskCancel.innerHTML = 'X';
+    newTaskCancel.addEventListener('click', UI.closeNewTaskPopUp);
+    
+
+    newTaskNav.appendChild(newTaskPopUp);
+    newTaskNav.appendChild(newTaskAddButton);
+    newTaskNav.appendChild(newTaskCancel);
+}
+
+
+static closeNewTaskPopUp = () => {
+    const newTaskNav = document.getElementById('new-task-nav');
+    while (newTaskNav.childNodes.length > 2) {
+    newTaskNav.removeChild(newTaskNav.lastChild)
+}
+}
+
+static checkDuplicateTasks = () => {
+    //
+    createTask();
+}
+
+static createTask = () => {
+    alert('wow');
+}
 
 // INIT PROJECT BUTTONS
     
 static initNewProjectButtons = () => {
-    const newProjectButton = document.getElementById('newProjectButton');
+    const newProjectButton = document.getElementById('new-project-button');
 
     newProjectButton.addEventListener('click', UI.checkNewProjectPopUp);
     }
 
-
-//creates popup when new project button pressed
 static newProjectPopUp = () => {
     const newProjectNav = document.getElementById('new-project-nav');
 
-    const projectButtonPopUp = document.createElement('input');
-    const addProjectButton = document.createElement('button');
-    addProjectButton.id = 'addProjectButton';
-    addProjectButton.innerHTML = '+';
-    addProjectButton.addEventListener('click', () => {
+    const newProjectPopUp = document.createElement('input');
+    const newProjectAddButton = document.createElement('button');
+    newProjectAddButton.id = 'newProjectAddButton';
+    newProjectAddButton.innerHTML = '+';
+    newProjectAddButton.addEventListener('click', () => {
         UI.createProject();
         UI.closeProjectButtonPopUp();
     })
 
-    const cancelButton = document.createElement('button');
-    cancelButton.innerHTML = 'X';
-    cancelButton.addEventListener('click', UI.closeProjectButtonPopUp);
+    const newProjectCancel = document.createElement('button');
+    newProjectCancel.innerHTML = 'X';
+    newProjectCancel.addEventListener('click', UI.closeProjectButtonPopUp);
 
-    newProjectNav.appendChild(projectButtonPopUp);
-    newProjectNav.appendChild(addProjectButton);
-    newProjectNav.appendChild(cancelButton);
+    newProjectNav.appendChild(newProjectPopUp);
+    newProjectNav.appendChild(newProjectAddButton);
+    newProjectNav.appendChild(newProjectCancel);
 }
-
-//HELPER FUNCTIONS
 
 static closeProjectButtonPopUp = () => {
 const newProjectNav = document.getElementById('new-project-nav');
@@ -52,13 +103,6 @@ while (newProjectNav.childNodes.length > 2) {
 }
 }
 
-//creates new project when '+' button pressed
-static createProject = () => {
-    const newProject = new Project('dingus',);
-    alert(newProject.getName())
-}
-
-// checks for newProjectPopUp existing already, returns if it does
 static checkNewProjectPopUp = () => {
 const checkPopUp = document.getElementById('new-project-nav');
 
@@ -66,6 +110,13 @@ if (checkPopUp.childElementCount === 1) {
     UI.newProjectPopUp();
     }
 return;
+}
+
+//PAGE FUNCTIONS
+
+static createProject = () => {
+    const newProject = new Project('dingus',);
+    alert(newProject.getName())
 }
 
     
