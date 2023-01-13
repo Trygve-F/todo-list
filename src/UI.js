@@ -33,13 +33,13 @@ static checkNewTaskPopUp = () => {
 static newTaskPopUp = () => {
     const newTaskNav = document.getElementById('new-task-nav');
     
-    const newTaskPopUp = document.createElement('input');
-    newTaskPopUp.id = 'new-task-popup';
+    const newTaskInput = document.createElement('input');
+    newTaskInput.id = 'new-task-input';
 
     const newTaskAddButton = document.createElement('button');
     newTaskAddButton.innerHTML = ' + ';
     newTaskAddButton.addEventListener('click', () => {
-        UI.addTaskToArray();
+        UI.addTaskToProject();
         UI.closeNewTaskPopUp();
 });
 
@@ -49,7 +49,7 @@ static newTaskPopUp = () => {
     newTaskCancel.addEventListener('click', UI.closeNewTaskPopUp);
     
 
-    newTaskNav.appendChild(newTaskPopUp);
+    newTaskNav.appendChild(newTaskInput);
     newTaskNav.appendChild(newTaskAddButton);
     newTaskNav.appendChild(newTaskCancel);
 };
@@ -63,12 +63,19 @@ static closeNewTaskPopUp = () => {
 };
 
 
-static addTaskToArray = () => {
+static addTaskToProject = () => {
+    const value = UI.getTaskInputValue()
+    alert(value)
     //find active project
     //add task to active projects array
-    const taskArray = []
+    
     
 
+};
+
+static getTaskInputValue = () => {
+    const value = document.getElementById('new-task-input').value;
+    return value;
 };
 
 // INIT PROJECT BUTTONS
@@ -123,43 +130,30 @@ static checkNewProjectPopUp = () => {
 static initDefaultProjects = () => {
     projectArray.push(new Project('Today'));
     projectArray.push(new Project('This Week'));
-    }
+    };
 
 
 
 static getProjectInputValue = () => {
     const value = document.getElementById('new-project-input').value;
     return value;
-}
+};
 
 static addProjectToArray = () => {
     const value = UI.getProjectInputValue();
     projectArray.push(new Project(value));
-}
+};
 
 static renderProjects = () => {
-    const container = document.getElementById('new-project-container')
+    const container = document.getElementById('new-project-container');
     container.innerHTML = '';
+
     projectArray.forEach((e) => {
         const temp = document.createElement('div');
         temp.innerHTML = e.getName();
-        container.appendChild(temp)
-        })
-}
+        container.appendChild(temp);
+        });
+};
 
  
 };
-
-
-
-
-
-/* static createDefaultProjects = () => {
-    const projectArray = []
-    projectArray.push(new Project('Today'));
-    projectArray.push(new Project('This Week'));
-
-    projectArray.forEach((e) => {
-        alert(e.getName())
-    })
-} */
