@@ -3,8 +3,11 @@ import Project from './project'
 
 const projectArray = []
 
+
 export default class UI {
 
+
+activeProject = ''
 
 //LOAD HOMEPAGE
 static loadHomepage = () => {
@@ -12,6 +15,7 @@ static loadHomepage = () => {
     UI.initNewTaskButtons();
     UI.initDefaultProjects();
     UI.renderProjects();
+    UI.activeProject = 'Today'
     };
 
 // INIT TASK BUTTONS
@@ -40,6 +44,7 @@ static newTaskPopUp = () => {
     newTaskAddButton.innerHTML = ' + ';
     newTaskAddButton.addEventListener('click', () => {
         UI.addTaskToProject();
+        UI.renderTasks();
         UI.closeNewTaskPopUp();
 });
 
@@ -64,14 +69,35 @@ static closeNewTaskPopUp = () => {
 
 
 static addTaskToProject = () => {
-    const value = UI.getTaskInputValue()
-    alert(value)
-    //find active project
-    //add task to active projects array
-    
-    
+    const inputValue = UI.getTaskInputValue()
+    const activeProject = UI.findActiveProject();
+    function isActiveProject(project) {
+        return project.name === activeProject
+    }
 
+    const element = (projectArray.find(isActiveProject))
+    element.setTasks(new Task(inputValue))
 };
+
+static renderTasks = () => {
+    const container = document.getElementById('task-container');
+    container.innerHTML = '';
+    const activeProject = UI.findActiveProject();
+
+    projectArray.forEach((e) => {
+        if (e.name === activeProject) {
+            container.innerHTML = ''
+        const taskArray = e.getTasks()
+        taskArray.forEach((e2) => {
+            const temp = document.createElement('button')
+            temp.innerHTML = e2.getName()
+            container.appendChild(temp)
+        })}
+    })
+}
+        
+
+       
 
 static getTaskInputValue = () => {
     const value = document.getElementById('new-task-input').value;
@@ -149,11 +175,30 @@ static renderProjects = () => {
     container.innerHTML = '';
 
     projectArray.forEach((e) => {
-        const temp = document.createElement('div');
+        const temp = document.createElement('button');
         temp.innerHTML = e.getName();
+        temp.id = e.getName();
+        temp.addEventListener ('click', () => {
+            UI.changeActiveProject(temp.id);
+            UI.renderTasks()
+        });
+
         container.appendChild(temp);
         });
 };
+
+static findActiveProject = () => {
+    const activeProject = UI.activeProject
+    return activeProject
+}
+
+static changeActiveProject = (name) => {
+    UI.activeProject = name
+    //alert(UI.activeProject)
+    
+}
+
+
 
  
 };
