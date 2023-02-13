@@ -86,16 +86,27 @@ static renderTasks = () => {
 
     projectArray.forEach((e) => {
         if (e.name === activeProject) {
-            container.innerHTML = ''
-        const taskArray = e.getTasks()
+            container.innerHTML = '';
+        const taskArray = e.getTasks();
         taskArray.forEach((e2) => {
-            const temp = document.createElement('button')
-            temp.innerHTML = e2.getName()
-            container.appendChild(temp)
+            const div = document.createElement('div');
+            div.innerHTML = e2.getName();
+
+            
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = 'X';
+            deleteButton.addEventListener('click', (() => {
+                delete taskArray[taskArray.indexOf(e2)];
+                deleteButton.parentElement.remove();
+            }))
+
+
+            div.appendChild(deleteButton);
+            container.appendChild(div);
         })}
     })
 }
-        
+
 
        
 
